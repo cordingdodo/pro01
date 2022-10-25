@@ -5,14 +5,14 @@
 이는, 회원 정보 수정, 회원 강제 탈퇴, 글 관리 등을 추가하였습니다.
 
 ## 프로젝트 설계
-![개념적 설계](./img/database/pro01_(1).png "개념적 설계")
-![논리적 설계](./img/database/pro01_(2).png "논리적 설계")
-![물리적 설계](./img/database/pro01_(3).png "물리적 설계")
-![물리적 설계2](./img/database/pro01_(4).png "물리적 설계2")
-![클래스 설계](./img/database/pro01_(5).png "클래스 설계")
-![기능 설계](./img/database/pro01_(6).png "기능 설계")
-![기능 설계2](./img/database/pro01_(7).png "기능 설계2")
-![DB ERD](./img/database/pro01_(8).png "DB ERD")
-![회원가입 시퀀스](./img/database/pro01_(9).png "회원가입 시퀀스")
+![개념적 설계](./img/database/pro01_(1).PNG "개념적 설계")
+![논리적 설계](./img/database/pro01_(2).PNG "논리적 설계")
+![물리적 설계](./img/database/pro01_(3).PNG "물리적 설계")
+![물리적 설계2](./img/database/pro01_(4).PNG "물리적 설계2")
+![클래스 설계](./img/database/pro01_(5).PNG "클래스 설계")
+![기능 설계](./img/database/pro01_(6).PNG "기능 설계")
+![기능 설계2](./img/database/pro01_(7).PNG "기능 설계2")
+![DB ERD](./img/database/pro01_(8).PNG "DB ERD")
+![회원가입 시퀀스](./img/database/pro01_(9).PNG "회원가입 시퀀스")
 
 ## 화면 설계
