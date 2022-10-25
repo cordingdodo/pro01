@@ -14,5 +14,6 @@
 ![기능 설계2](./img/database/pro01_(7).PNG "기능 설계2")
 ![DB ERD](./img/database/pro01_(8).PNG "DB ERD")
 ![회원가입 시퀀스](./img/database/pro01_(9).PNG "회원가입 시퀀스")
+![로그인 시퀀스](./img/database/pro01_(10).PNG "로그인시퀀스")
 
 ## 화면 설계

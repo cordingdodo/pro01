@@ -56,21 +56,31 @@
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
                 <select name="sel1" id="sel1" class="sel">
-                <option>CJ Now</option>
+                <option>인재 채용</option>
                 <option value="brand.jsp#page1">Brand</option>
                 <option value="susta.jsp#page1">Sustainability</option>
                 <option value="company.jsp#page1">CJ 소개</option>
-                <option value="job.jsp1#page1">인재 채용</option>
+                <option value="cjnow.jsp">cj now</option>
              </select> 
             </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">Cj now</h2>
+                <h2 class="page_title">게시판 글 상세보기</h2>
+                <div class="tb_fr">
+                	<thead>
+                		<tr>
+                			<th>제목</th>
+                			<th>글쓴이</th>
+                			<th>작성일</th>       
+                		</tr>
+                	</thead>
+                	
+                	</div>
             </div>
             </section>
             </div>
-            </div>
+            </div>>
     <script>
    var sel = document.getElementsByClassName("sel");
     for(var i=0;i<sel.length;i++){
