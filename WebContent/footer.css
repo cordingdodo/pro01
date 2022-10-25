@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+.ft { clear:both; width: 100%; height: 200px; padding-bottom: 50px; }
+.ft_wrap {clear:both; width: 1200px; margin: 0 auto; padding-top: 50px; padding-bottom: 50px; }
+.ft_wrap:after {content: ""; display: block; clear: both;} /*클리어픽스: 크기변경안될때도와줌*/
+.ft_logo {float:left; width: 120px;}
+.mid_box {float:left; width: 750px; padding-left: 50px;}
+.fnb { clear: both;}
+.fnb a { color: black; font-size: 14px; padding: 24px;}
+.fnb a.dpc { color:#f0d0ce; }
+.addr {padding-left: 24px; color:rgb(98, 98, 98); padding-top: 20px; font-style: 12px; 
+    line-height: 2;}
+.sel_box {float:right; border-bottom: 1px solid #fff; height: 44px; line-height: 44px; 
+    text-align: center; width: 140px;}
+#sel { border: none; outline: none; background-color: transparent; color: rgb(104, 104, 104);}
+.copyright {padding-top: 10; padding-left: 24px; color:#555555; padding-top: 20px; font-size: 12px;}
+#sel option { color:#333; }
