@@ -1,97 +1,57 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
-	<%@include file = "header.jsp" %>
-	<style>
-    /*content*/
-    .vs {clear: both; width: 100%; height: 300px; overflow: hidden;}
-    .vs img{display: block; width: 100%; height: auto;}
-    .bread { clear: both; width: 100%; height: auto; line-height: 60px; border-bottom: 3px solid #eee;}
-    .bread_fr {width: 1200px; margin: 0 auto;}
-    .page {clear: both; width: 100%; min-height: 100vh;}
-    .page::after {content: ""; display: block; clear: both;}
-    .page_wrap {width: 1200px; margin: 0 auto;}
-    /* .content {display: none;} */
-    .content:target { display: block;}
-
-    .page_title { padding-top: 1em; font-size: 30px; }
-    .home { color: #333;}
-    .to_top { position:fixed; bottom:80px; right:80px; z-index:999; 
-    background-color:rgba(11,11,11,0.75); color:#fff; display:block; width: 60px;
-    height: 60px; line-height: 60px; text-align: center; font-size:20px; border-radius:32px; visibility:hidden; transition-duration:0.8s; }
-    .to_top:hover {background-color: pink;}
-    .to_top.on {visibility: visible;}      
-
-    </style>
-    <link rel="stylesheet" href="footer.css">
-    <script>
-    $(document).ready(function(){
-        $(".to_top").attr("href", location.href);
-        $(window).scroll(function(){
-            var ht = $(window).height();
-            var tp = $(this).scrollTop();
-            if(tp>=300){
-                $(".to_top").addClass("on");
-                $(".to_top").attr("href", location.href);
-            } else {
-                $(".to_top").removeClass("on");
-                $(".to_top").attr("href", location.href); 
-            }
-        });
-    });    
-        </script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
-<div class="wrap">
-      <header class="hd">
-        <%@include file="nav.jsp" %>
-    </header>
-    <div class="content" id="page1">
-        <figure class="vs">
-            <img src="" alt="">
-        </figure>
-        <div class="bread">
-            <div class="bread_fr">
-                <a href="index.jsp" class="home">HOME</a> &gt;
-                <select name="sel1" id="sel1" class="sel">
-                <option>인재 채용</option>
-                <option value="brand.jsp#page1">Brand</option>
-                <option value="susta.jsp#page1">Sustainability</option>
-                <option value="company.jsp#page1">CJ 소개</option>
-                <option value="cjnow.jsp">cj now</option>
-             </select> 
-            </div>
-        </div>
-        <section class="page">
-            <div class="page_wrap">
-                <h2 class="page_title">게시판 글 상세보기</h2>
-                <div class="tb_fr">
-                	<thead>
-                		<tr>
-                			<th>제목</th>
-                			<th>글쓴이</th>
-                			<th>작성일</th>       
-                		</tr>
-                	</thead>
-                	
-                	</div>
-            </div>
-            </section>
-            </div>
-            </div>>
-    <script>
-   var sel = document.getElementsByClassName("sel");
-    for(var i=0;i<sel.length;i++){
-        sel[i].addEventListener("change", function(){
-            location.href = this.value;
-        });
-    }
-    </script>
-    <footer class="ft">
- 	<%@ include file="footer.jsp" %>
-    </footer>
-<a href="#" class="to_top">↑</a> <!--#만 넣으면 뿅하고올라감--> <!--to.top_on 제이쿼리로 온클래스추가-->
+<%
+		int no = Integer.parseInt(request.getParameter("no"));
+		String title = "";
+		String content = "";
+		String uname = "";
+		String resdate = "";
+		String author = "";
+%>
+<%@ include file="connectionPool.conf" %>
+<%
+		
+		sql = "select a.no no, a.title title, a.content content, ";
+		sql = sql + "b.name name, a.resdate resdate, a.author author";
+		sql = sql + "from boarda a inner join membera b ";
+		sql = sql + "on a.author=b.id where a.no=?";
+		pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, no);
+		rs = pstmt.executeQuery();
+		
+%>  
+
+<%@ include file="connectionClose.conf" %>
+
+	<table>
+		<tbody>
+		<tr>
+			<td>번호</td>
+			<td><%=rs.getInt("no") %></td>
+			<td>제목</td>
+			<td><%=rs.getString("tit") %></td>
+			<td>작성자</td>
+			<td><%=rs.getString("nm") %></td>
+			<td>작성일</td>
+			<td><%=rs.getString("res") %></td>
+		</tr>
+		</tbody>
+		
+
+	</table>
+<div class="btn_group">
+	<a href="boardList.jsp" class="btn primary">게시판 목록</a>
+	<%
+		if(sid.equals("admin") || sid.equals(author)){
+	%>
+	<a href='boardModify.jsp?no=<%=no %>' class=btn_primary">글 수정</a>
+	<a href='boardDel.jsp?no=<%=no %>' class="btn_primary">글 삭제</a>
+		<% } %>
+</div>
 </body>
 </html>

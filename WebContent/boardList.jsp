@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, java.sql.*" %>
+<%@ page import="java.util.*, java.sql.*, java.text.*" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	response.setCharacterEncoding("UTF-8");
 	response.setContentType("text/html; charset=UTF-8");
 	
-	int no = Integer.parseInt(request.getParameter("no"));
-	String title = request.getParameter("title");
-	String id = request.getParameter("id");
+	String sid = (String) session.getAttribute("id");
 	
 	Connection con = null;
 	PreparedStatement pstmt = null;
@@ -18,13 +16,19 @@
 	String dbid = "system";
 	String dbpw = "123";
 	String sql = "";
-	
+	int cnt = 0;
+	String title = "";
+	String author = "";
 	try {
 			Class.forName("oracle.jdbc.OracleDriver");
 			con = DriverManager.getConnection(url, dbid, dbpw);
-			sql = "select * from boarda";
+			sql = "select count(*) cnt from BOARDa";
 			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();	
+			rs.close();
+			pstmt.close();
+			
+
 %>
 <!DOCTYPE html>
 <html>
@@ -80,39 +84,74 @@
                 <h2 class="page_title">게시판 목록</h2>
                 				<div class="tb_fr">
                 					<table class="tb">
-                						<thead>
+                					<thead>
+                						
                 							<tr>
-                								<th>번호</th>
-                								<th>글 제목</th>
-                								<th>작성자</th>
-                								<th>작성일</th>
+                								<td>번호</td>
+                								<td>글 제목</td>       								
+                								<td>작성자</td>
+                								<td>작성일</td>
                 							</tr>
-                					</thead>
                 					<tbody>
-<%
-		int cnt = 0;
-		while(rs.next()){
-			cnt+=1;
+                					
+                					
+<%			
+			pstmt = null;
+			rs = null;
+			sql = "select * from BOARDa";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();	
+
+			while(rs.next()){
+				cnt++;
+				SimpleDateFormat yymmdd = new SimpleDateFormat("yyyy-MM-dd");
+				String date = yymmdd.format(rs.getDate("resdate"));
+
 %>
-			<tr>
-					<td><%=cnt %></td>
-					<td><a href='boardDetail.jsp?title=<%=rs.getString("title") %>'><%=rs.getString("id") %><%=rs.getString("regdate") %></a></td>
-					<td><%=rs.getString("title") %></td>
-					<td><%=rs.getString("name") %></td>
-					<td><%=rs.getString("regdate") %></td>
-			</tr>
+					<tr> 
+						<td><%=cnt %></td>
+						<td>
+						<%
+						if(sid!=null){
+						%>
+							<a href='boardDetail.jsp?no=<%=rs.getInt("no")%>'><%=rs.getString("title") %></a>
+						<%
+						} else {
+						%>
+							<span><%=rs.getString("title") %></span>
+						<%
+						}
+						%>
+						</td>
+						<td><%=rs.getString("author") %></td>
+						<td><%=date %></td>
+					
+					</tr>
 <%
-			}
-		} catch(Exception e){
-			e.printStackTrace();
-		} finally {
-			rs.close();
-			pstmt.close();
-			con.close();
+					}
+				} catch(Exception e){
+					e.printStackTrace();
+				} finally {
+					rs.close();
+					pstmt.close();
+					con.close();
+					
 		}
-%>
+%>		
+
 						</tbody> 
 					</table>
+					
+					<div class="btn_group">
+					<% 
+						if(sid!=null){
+					%>
+							<a href="boardWrite.jsp" class="btn primary">글쓰기</a>
+					<%
+					}
+					%>	
+
+					</div>
 				</div>
 			</div>
         </section>
