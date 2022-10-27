@@ -2,53 +2,21 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, java.sql.*, java.text.*" %>
 <%
-	request.setCharacterEncoding("UTF-8");
-	response.setCharacterEncoding("UTF-8");
-	response.setContentType("text/html; charset=UTF-8");
-	
 	String sid = (String) session.getAttribute("id");
-	
 	int no = Integer.parseInt(request.getParameter("no"));
-	String title = "";
-	String content = "";
-	String uname = "";
-	String resdate = "";
-	String author = "";
-	
-	Connection con = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
-	
-	String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	String dbid = "system";
-	String dbpw = "123";
-	String sql = "";
-	
-	try {
-		Class.forName("oracle.jdbc.OracleDriver");
-		con = DriverManager.getConnection(url, dbid, dbpw);
-		sql = "select a.no no, a.title title, a.content content, ";
-		sql = sql + "b.name name, a.resdate resdate, a.author author ";
-		sql = sql + "from boarda a inner join membera b ";
-		sql = sql + "on a.author=b.id where a.no=?";
+%>
+
+<%@ include file = "connectionPool.conf" %>
+
+<%
+		sql = "select * from faqa where no=?";
 		pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, no);
 		rs = pstmt.executeQuery();
 		
 		if(rs.next()){
-				title = rs.getString("title");
-				content = rs.getString("content");
-				uname = rs.getString("name");
-				resdate = rs.getString("resdate");
-				author = rs.getString("author");
-		}
-	} catch(Exception e){
-			e.printStackTrace();
-	} finally {
-			rs.close();
-			pstmt.close();
-			con.close();
-	}
+		
+				
 %>
 <!DOCTYPE html>
 <html>
@@ -101,53 +69,54 @@
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">글 보기</span>
+                <span class="sel">FAQ 보기</span>
             </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">글 보기</h2>
+                <h2 class="page_title">FAQ 보기</h2>
   				<div class="tb_fr">
   					<table class="tb">
   						<tbody>             
 							<tr>
-								<th>글 번호</th>
-								<td><%=no %></td>
-							</tr>
-							<tr>
 								<th>제목</th>
-								<td><%=title %></td>
+								<td><%=rs.getString("title") %></td>
 							</tr>
 							<tr>
 								<th>내용</th>
-								<td><%=content %></td>
+								<td><%=rs.getString("content") %></td>
 							</tr>
 							<tr>
 								<th>작성자</th>
-								<td><%=uname %></td>
+								<td>관리자</td>
 							</tr>
 							<tr>
 								<th>작성일</th>
-								<td><%=resdate %></td>
+								<td><%=rs.getString("resdate") %></td>
 							</tr>
+													
+			
 						</tbody> 
 					</table>
 					<div class="btn_group">
-						<a href="boardList.jsp" class="btn primary">게시판 목록</a>
+						<a href="faqList.jsp" class="btn primary">게시판 목록</a>
 						<%
-							if(sid.equals("admin") || sid.equals(author)) {
+							if(sid.equals("admin")) {
 						%>
-						<a href='boardModify2.jsp?no=<%=no %>' class="btn primary">글 수정</a>
-						<a href='boardDel.jsp?no=<%=no %>' class="btn primary">글 삭제</a>
+						<a href='faqModify2.jsp?no=<%=no %>' class="btn primary">글 수정</a>
+						<a href='faqDel.jsp?no=<%=no %>' class="btn primary">글 삭제</a>
 						<% } %>
+
 					</div>
 				</div>
 			</div>
         </section>
     </div>
+    <% } %>	
     <footer class="ft">
 		<%@ include file="footer.jsp" %>
     </footer>
 </div>
+<%@ include file="connectionClose.conf" %>
 </body>
 </html>

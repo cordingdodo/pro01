@@ -28,3 +28,10 @@ select a.no no, a.title tit, a.content con, b.name nm, a.resdate res from boarda
 
 drop table boarda cascade constraint;
 
+--글 수정하기
+update boarda set title=?, content=? where no=?
+
+--글 등록하기
+insert boarda into valuse (no, title, content, author, resdate);
+insert boarda into values (bseq.nextval, ?, ?, ?, sysdate);
+

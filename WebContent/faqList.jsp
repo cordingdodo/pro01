@@ -2,33 +2,16 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, java.sql.*, java.text.*" %>
 <%
-	request.setCharacterEncoding("UTF-8");
-	response.setCharacterEncoding("UTF-8");
-	response.setContentType("text/html; charset=UTF-8");
-	
 	String sid = (String) session.getAttribute("id");
-	
-	Connection con = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
-	
-	String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	String dbid = "system";
-	String dbpw = "123";
-	String sql = "";
 	int cnt = 0;
-	String title = "";
-	String author = "";
-	try {
-			Class.forName("oracle.jdbc.OracleDriver");
-			con = DriverManager.getConnection(url, dbid, dbpw);
-			sql = "select count(*) cnt from BOARDa";
-			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery();	
-			rs.close();
-			pstmt.close();
-			
+%>
+<%@ include file="connectionPool.conf"%>
 
+<%		sql = "select * from faqa order by parno asc, gubun asc";
+		pstmt = con.prepareStatement(sql);
+		rs = pstmt.executeQuery();	
+
+			
 %>
 <!DOCTYPE html>
 <html>
@@ -76,19 +59,18 @@
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">게시판 관리</span>
+                <span class="sel">자주 묻는 질문 게시판</span>
             </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">게시판 목록</h2>
+                <h2 class="page_title">자주 묻는 질문 게시판</h2>
                 				<div class="tb_fr">
                 					<table class="tb">
                 					<thead>
                 						
                 							<tr>
-                								<td>번호</td>
-                								<td>글 제목</td>       								
+                								<td>제목</td>       								
                 								<td>작성자</td>
                 								<td>작성일</td>
                 							</tr>
@@ -96,12 +78,6 @@
                 					
                 					
 <%			
-			pstmt = null;
-			rs = null;
-			sql = "select * from BOARDa";
-			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery();	
-
 			while(rs.next()){
 				cnt++;
 				SimpleDateFormat yymmdd = new SimpleDateFormat("yyyy-MM-dd");
@@ -109,44 +85,22 @@
 
 %>
 					<tr> 
-						<td><%=cnt %></td>
 						<td>
-						<%
-						if(sid!=null){
-						%>
-							<a href='boardDetail2.jsp?no=<%=rs.getInt("no")%>'><%=rs.getString("title") %></a>
-						<%
-						} else {
-						%>
-							<span><%=rs.getString("title") %></span>
-						<%
-						}
-						%>
-						</td>
-						<td><%=rs.getString("author") %></td>
+							<a href='faqDetail.jsp?no=<%=rs.getInt("no")%>'><%=rs.getString("title") %></a></td>
+						<td>관리자</td>
 						<td><%=date %></td>
-					
 					</tr>
-<%
+					<% 
 					}
-				} catch(Exception e){
-					e.printStackTrace();
-				} finally {
-					rs.close();
-					pstmt.close();
-					con.close();
-			
-		}
-%>		
-
-						</tbody> 
-					</table>
-					
+					%>
+									</tbody> 
+								</table>
+								
 					<div class="btn_group">
 					<% 
-						if(sid!=null){
+						if(sid=="admin"){ 
 					%>
-							<a href="boardWrite.jsp" class="btn primary">글쓰기</a>
+							<a href="faqWrite.jsp" class="btn primary">글쓰기</a>
 					<%
 					}
 					%>	
@@ -160,5 +114,7 @@
 		<%@ include file="footer.jsp" %>
     </footer>
 </div>
+
+    <%@ include file="connectionClose.conf" %>
 </body>
 </html>

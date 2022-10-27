@@ -17,6 +17,7 @@
 		<span class="id_print"><%=name %>님</span>
 			<a href="memList.jsp">회원 관리</a>
 			<a href="boardList.jsp">게시판 관리</a>
+			<a href="faqList.jsp">FAQ 게시판 관리</a>
 			<a href="logout.jsp">로그아웃</a>
 			<a href="sitemap.jsp">사이트맵</a>
 		</div>
@@ -73,9 +74,9 @@
                     <li class="item5">
                         <a href="" class="dp1">인재 채용</a>
                         <ul class="sub">
-                            <li><a href="job.jsp1#page1">채용공고</a></li>
+                            <li><a href="faqList.jsp">FAQ 게시판</a></li>
                             <li><a href="job.jsp1#page2">직무정보</a></li>
-                            <li><a href="job.jsp1#page3">게시판</a></li>
+                            <li><a href="boardList.jsp">게시판</a></li>
                         </ul>
                     </li>
                 </ul>
