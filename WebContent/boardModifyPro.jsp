@@ -17,7 +17,7 @@
 	cnt = pstmt.executeUpdate();
 
 
-	if(cnt>0){
+	if(cnt>=1){
 		response.sendRedirect("boardList.jsp");
 	} else {
 		response.sendRedirect("boardDetail2.jsp?no="+no);

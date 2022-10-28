@@ -99,7 +99,7 @@
 								
 					<div class="btn_group">
 					<% 
-						if(sid.equals("admin")){ 
+						if(sid=="admin"){ 
 					%>
 							<a href="faqWrite.jsp" class="btn primary">글쓰기</a>
 					<%

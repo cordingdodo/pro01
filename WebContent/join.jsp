@@ -92,7 +92,7 @@
                                 <tr>
                                     <th><label for="email">이메일</label></th>
                                     <td>
-                                        <input type="email" id="email" name="email" class="in_dt" required>
+                                        <input type="email" id="email" name="email" class="in_dt" pattern=".+@naver\.com" placeholder="네이버 이메일 주소 입력" required>ㄴ
                                     </td>
                                 </tr>
                                   <tr>

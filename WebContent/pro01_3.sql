@@ -4,6 +4,9 @@ resdate date default sysdate,
 gubun number not null, --질문(0)과 답변(1)을 구분하기 위한 넘버
 parno number not null);  --질문(1)과 답변(1)을 이어주는 넘버
 
+--글 추가
+insert into faqa values (fsq.nextval, title, content, author, resdate, gubun, parno);
+
 create SEQUENCE fseq;
 drop sequence fseq;
 
@@ -22,5 +25,6 @@ insert into faqa values(fseq.nextval, '답변4', '답변4', 'admin', sysdate, 1,
 insert into faqa values(fseq.nextval, '답변5', '답변5', 'admin', sysdate, 1, 5);
 
 select * from faqa order by parno asc, gubun asc;
-select * from faqa order by parno asc, gubun asc where no=3;
+select * from faqa where no=3;
+select * from memberb;
 commit;

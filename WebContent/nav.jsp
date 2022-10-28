@@ -75,7 +75,7 @@
                         <a href="" class="dp1">인재 채용</a>
                         <ul class="sub">
                             <li><a href="faqList.jsp">FAQ 게시판</a></li>
-                            <li><a href="job.jsp1#page2">직무정보</a></li>
+                            <li><a href="qnaList.jsp">QNA 게시판</a></li>
                             <li><a href="boardList.jsp">게시판</a></li>
                         </ul>
                     </li>

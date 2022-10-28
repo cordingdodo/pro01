@@ -6,7 +6,13 @@
 	int no = Integer.parseInt(request.getParameter("no"));
 	String sid = (String) session.getAttribute("id");
 %>
-
+<%@ include file="connectionPool.conf"%>
+<% 
+	sql = "select * from qnaa where no=?";
+	pstmt = con.prepareStatement(sql);
+	pstmt.setInt(1, no);
+	rs = pstmt.executeQuery();
+%>
 	
 
 <!DOCTYPE html>
@@ -54,24 +60,20 @@
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">자주 하는 질문 글 수정</span>
+                <span class="sel">FAQ 수정</span>
             </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">자주 하는 질문 글 수정</h2>
-                <%@ include file="connectionPool.conf"%>
-				<% 
-					sql = "select * from faqa where no=?";
-					pstmt = con.prepareStatement(sql);
-					pstmt.setInt(1, no);
-					rs = pstmt.executeQuery();
-					if(rs.next()){
-				%>	
-<div class="frm1">
-	<form class=frm action="faqModifyPro.jsp" method="post" class="frm">
+                <h2 class="page_title">FAQ 수정</h2>
+                				<div class="frm1">
+	<form class=frm1 action="qnaModifyPro.jsp" method="post" class=frm>
 		<table class=tb>
 			<tbody>
+			<tr>
+				<th>번호</th>
+				<td><input type="hidden" name="no" id="no" value=<%=no %> readonly></td>
+			</tr>
 			<tr>
 				<th>제목</th>
 				<td><input type="text" name="title" id="title" value='<%=rs.getString("title") %>' class="in_data"></td>
@@ -79,18 +81,24 @@
 			<tr>
 				<th>내용</th>
 				<td>
-				<textarea cols="100" rows="8" name="content" id="content" value=<%=rs.getString("content") %>></textarea>
+				<textarea name="content" id="content" value=<%=rs.getString("content") %> class="in_data"></textarea>
 				</td>
 			</tr>	
 			<tr>
 				<th>작성자</th>
-				<td>관리자</td>
+				<td><input type="text" name="author" id="author" value=<%=rs.getString("author") %>></input></td>
 			</tr>
 			</tbody>
 		</table>
 		<div class="btn_group">
+			<%
+			if(sid.equals(rs.getString("author"))){
+			%>
 				<button type="submit" class="btn primary">글 수정</button>
-				<a href="faqList.jsp">글 목록</a>
+			<%
+			}
+			%>
+			<a href="qnaList.jsp">글 목록</a>
 						</div>
 					</form>
 				</div>
@@ -100,9 +108,6 @@
     <footer class="ft">
 		<%@ include file="footer.jsp" %>
     </footer>
-    <%
-    }
-    %>
     <%@include file="connectionClose.conf" %>
 </div>
 </body>
